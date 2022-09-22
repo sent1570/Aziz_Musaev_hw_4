@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class Main {
     public static int bossHealth = 1000;
-    public static int bossDamage = 150;
+    public static int bossDamage = 100;
     public static String bossDefenceType;
-    public static int[] heroesHealth = {250, 260, 270, 500, 220, 230, 240, 210};
+    public static int[] heroesHealth = {250, 180, 270, 500, 220, 230, 240, 210};
     public static int[] heroesDamage = {25, 20, 15, 5, 25, 20, 15};
     public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Golem", "Lucky", "Berserk", "Thor"};
     public static int roundNumber = 0;
@@ -144,7 +144,7 @@ public class Main {
         System.out.println("ROUND " + roundNumber + " --------------");
         System.out.println("Boss health: " + bossHealth + "; damage: "
                 + bossDamage + "; defence: " + (bossDefenceType == null ? "No defence" : bossDefenceType));
-        for (int i = 0; i < heroesDamage.length; i++) {
+        for (int i = 0; i < heroesHealth.length; i++) {
             if (i == 7) {
                 System.out.println("Medic health: " + heroesHealth[7]);
             } else {
