@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Main {
     public static int bossHealth = 1000;
-    public static int bossDamage = 100;
+    public static int bossDamage = 50;
     public static String bossDefenceType;
     public static int[] heroesHealth = {250, 180, 270, 500, 220, 230, 240, 210};
     public static int[] heroesDamage = {25, 20, 15, 5, 25, 20, 15};
@@ -43,33 +43,48 @@ public class Main {
         randomLucky = random.nextInt(2);
         randomBerserk = random.nextInt(5) + 2;
         randomThor = random.nextInt(2);
+        blockedDamage = bossDamage / randomBerserk;
         for (int i = 0; i < heroesHealth.length; i++) {
             if (randomThor == 0 || heroesHealth[6] < 0) {
                 if (heroesHealth[i] > 0) {
-                    if (heroesHealth[i] - bossDamage < 0) {
+                     if(heroesHealth[5] - (bossDamage - blockedDamage) < 0 && i == 5 && heroesHealth[3] <= 0){
+                         heroesHealth[i] = 0;
+                     }
+                    else if (heroesHealth[5] - ((bossDamage - (bossDamage / 5)) - blockedDamage)< 0 && i == 5 && heroesHealth[3] > 0){
+                        heroesHealth[i] = 0;
+                     }
+                    else if(heroesHealth[i] - bossDamage + (bossDamage / 5) < 0 && heroesHealth[3] > 0){
+                        heroesHealth[i] = 0;
+                    }
+                    else if (heroesHealth[i] - bossDamage < 0 && heroesHealth[3] <= 0) {
                         heroesHealth[i] = 0;
                     } else if (randomLucky == 1 && i == 4) {
                         heroesHealth[4] = heroesHealth[4];
                         System.out.println("Lucky is ability activated");
                     } else {
-                        if (i == 5) {
-                            blockedDamage = bossDamage / randomBerserk;
+                        if (i == 5 && heroesHealth[3] > 0) {
                             heroesHealth[5] = heroesHealth[5] - ((bossDamage - (bossDamage / 5)) - blockedDamage);
                             System.out.println("Berserker damage blocked: " + blockedDamage);
-
-                        } else if (i == 3) {
+                        }
+                        else if(i == 5 && heroesHealth[3] <= 0){
+                            heroesHealth[5] = heroesHealth[5] - (bossDamage - blockedDamage);
+                            System.out.println("Berserker damage blocked: " + blockedDamage);
+                        }
+                        else if (i == 3) {
                             heroesHealth[3] = (heroesHealth[3] - bossDamage) - (bossDamage / 5 * (heroesDamage.length));
                             if (heroesHealth[3] < 0) {
                                 heroesHealth[3] = 0;
                             }
-                        } else {
+                        } else if (heroesHealth[3] > 0){
                             heroesHealth[i] = heroesHealth[i] - bossDamage + (bossDamage / 5);
+                        }
+                        else{
+                            heroesHealth[i] = heroesHealth[i] - bossDamage;
                         }
                     }
                 }
             }
         }
-
         if (randomThor == 1) {
             System.out.println("Thos is ability activated");
         }
